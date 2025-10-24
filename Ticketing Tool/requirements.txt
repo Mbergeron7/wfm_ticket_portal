@@ -1,4 +1,3 @@
-st-aggrid
 streamlit
 st-aggrid
 pandas

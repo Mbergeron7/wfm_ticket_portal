@@ -3,5 +3,3 @@ st-aggrid
 pandas
 numpy
 openpyxl
-extra-streamlit-components
-openai

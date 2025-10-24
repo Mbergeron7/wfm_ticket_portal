@@ -4,12 +4,12 @@ import uuid
 import datetime
 import os
 
-CSV_PATH = r"C:\Users\mikeb\OneDrive - StorageVault Canada Inc\3.  Workforce Management\Mike Files\Power BI Files\WFM Tickets backup.csv"
+CSV_PATH = "WFM_Tickets_backup.csv"
 
 st.title("🎫 WFM Ticket Portal")
 
-# 🔗 Add dashboard link
-st.markdown("[📊 Open Dashboard](Ticket%20Dashboard)")
+# 🔗 Dashboard link (matches pages/Ticket_Dashboard.py)
+st.markdown("[📊 Open Dashboard](Ticket_Dashboard)")
 
 # ✅ Detect query param for ticket drill-down
 selected_id = st.query_params.get("ticket_id", None)
@@ -17,11 +17,16 @@ selected_id = st.query_params.get("ticket_id", None)
 # 🔍 If ticket_id is passed, show ticket details and edit panel
 if selected_id:
     st.subheader(f"🔍 Ticket Details: {selected_id}")
+    
     if not os.path.exists(CSV_PATH):
         st.error("Ticket data not found.")
         st.stop()
 
     df = pd.read_csv(CSV_PATH)
+    if selected_id not in df["ticket_id"].values:
+        st.error("Ticket ID not found.")
+        st.stop()
+
     ticket = df[df["ticket_id"] == selected_id].iloc[0]
 
     # Display all ticket fields
@@ -44,7 +49,7 @@ if selected_id:
         st.toast("✅ Ticket updated")
         st.rerun()
 
-    st.markdown("[← Back to Dashboard](Ticket%20Dashboard)")
+    st.markdown("[← Back to Dashboard](Ticket_Dashboard)")
     st.stop()
 
 # 📝 Ticket submission form

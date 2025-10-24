@@ -1,5 +1,0 @@
-streamlit
-st-aggrid
-pandas
-numpy
-openpyxl

@@ -4,12 +4,12 @@ import datetime
 import os
 from st_aggrid import AgGrid, GridOptionsBuilder
 
-CSV_PATH = r"C:\Users\mikeb\OneDrive - StorageVault Canada Inc\3.  Workforce Management\Mike Files\Power BI Files\WFM Tickets backup.csv"
+CSV_PATH = "WFM_Tickets_backup.csv"
 
 st.title("📊 WFM Ticket Dashboard")
 
-# 🔗 Add "New Ticket" button
-st.markdown("[➕ Create New Ticket](../)")
+# 🔗 Link back to main ticket submission page
+st.markdown("[➕ Create New Ticket](wfm_ticket_portal)")
 
 # 🚨 Check for data
 if not os.path.exists(CSV_PATH):
@@ -64,7 +64,7 @@ if not high_risk.empty:
 st.subheader("🔍 All Tickets")
 
 # Create clickable links using query params
-df["ticket_link"] = df["ticket_id"].apply(lambda tid: f"[{tid}](../?ticket_id={tid})")
+df["ticket_link"] = df["ticket_id"].apply(lambda tid: f"[{tid}](wfm_ticket_portal?ticket_id={tid})")
 display_df = df[["ticket_link", "advisor_name", "priority", "status", "risk_score", "sla_breach", "created_at", "last_updated"]]
 display_df.rename(columns={"ticket_link": "Ticket ID"}, inplace=True)
 

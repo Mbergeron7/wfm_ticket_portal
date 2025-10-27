@@ -1,10 +1,12 @@
 streamlit
-st-aggrid
 pandas
-numpy
 openpyxl
-extra-streamlit-components
-openai
+xlrd
+numpy
+matplotlib==3.4.3
+scikit-learn==0.24.2
+seaborn
 plotly
-matplotlib
 streamlit-aggrid
+requests
+python-dateutil

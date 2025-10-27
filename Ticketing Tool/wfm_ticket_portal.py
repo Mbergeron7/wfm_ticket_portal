@@ -24,8 +24,11 @@ status = st.selectbox("Status", ["Open", "In Progress", "Resolved", "Escalated"]
 assigned_to = st.text_input("Assigned To", value="wfm_analyst_1")
 resolution_notes = st.text_area("Resolution Notes")
 
-# 🔗 Link to request-specific form
+# 🔗 Link to selected request form
 if request_type:
     page_name = request_type.replace(" ", "_").replace("/", "_")
     st.markdown(f"[➡️ Continue to {request_type} Form]({page_name})")
 
+# 🧭 Link to full request list
+st.markdown("---")
+st.markdown("[📋 View All Request Types](Request_Categories)")

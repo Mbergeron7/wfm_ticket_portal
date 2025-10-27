@@ -26,5 +26,6 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run Streamlit app (optional)
+        working-directory: "Ticketing Tool"
         run: |
-          streamlit run Ticketing\ Tool/wfm_ticket_portal.py --server.headless true
+          streamlit run wfm_ticket_portal.py --server.headless true

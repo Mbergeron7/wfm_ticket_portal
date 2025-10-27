@@ -6,12 +6,12 @@ st.title("🎫 Create New Ticket")
 # Core fields
 advisor_name = st.text_input("Advisor Name *")
 team_lead = st.selectbox("Advisor Team Lead *", [
-    "Adeyinka", "Alana", "Alexandra", "Aman", "Bryan", "Cushana", "David", "Dee", "Jodi", "Julianne",
+    " ", "Adeyinka", "Alana", "Alexandra", "Aman", "Bryan", "Cushana", "David", "Dee", "Jodi", "Julianne",
     "Kristin", "Lucas", "Maggie", "Mike", "Odette", "Pat", "Salomon", "Sean", "Shavindri", "Teresa"
 ])
 request_date = st.date_input("Date for Request *", value=datetime.date.today())
 request_type = st.selectbox("WFM Request *", [
-    "Accommodation request/update", "Add additional hours", "Add/remove/change team meeting",
+    " ", "Accommodation request/update", "Add additional hours", "Add/remove/change team meeting",
     "Add/remove/move training", "Add offline segment", "Advisor arrived late, remove absence",
     "CP skill update", "Employee status update (not for schedule changes)", "Is OT available?",
     "Move break/lunch because of meeting", "Schedule Update - CP3 use", "Schedule Error Adjustment",
@@ -32,3 +32,4 @@ if request_type:
 # 🧭 Link to full request list
 st.markdown("---")
 st.markdown("[📋 View All Request Types](Request_Categories)")
+

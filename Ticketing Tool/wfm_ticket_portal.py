@@ -21,7 +21,7 @@ detail_1 = st.text_area("Detail (Part 1)")
 detail_2 = st.text_area("Detail (Part 2)")
 priority = st.selectbox("Priority", ["Low", "Medium", "High", "Critical"])
 status = st.selectbox("Status", ["Open", "In Progress", "Resolved", "Escalated"])
-assigned_to = st.text_input("Assigned To", value="Mike Bergeron", "Dawn Devenny", "Josh Sauve", "JC Ilunga")
+assigned_to = st.text_input("Assigned To", value="wfm_analyst_1")
 resolution_notes = st.text_area("Resolution Notes")
 
 # 🔗 Link to selected request form
@@ -32,5 +32,6 @@ if request_type:
 # 🧭 Link to full request list
 st.markdown("---")
 st.markdown("[📋 View All Request Types](Request_Categories)")
+
 
 

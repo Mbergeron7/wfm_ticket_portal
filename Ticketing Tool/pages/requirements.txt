@@ -6,3 +6,5 @@ openpyxl
 extra-streamlit-components
 openai
 plotly
+matplotlib
+streamlit-aggrid

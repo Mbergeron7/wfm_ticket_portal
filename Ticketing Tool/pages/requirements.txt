@@ -5,3 +5,4 @@ numpy
 openpyxl
 extra-streamlit-components
 openai
+plotly

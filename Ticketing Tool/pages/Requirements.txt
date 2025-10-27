@@ -1,9 +1,0 @@
-streamlit
-pandas
-plotly
-openpyxl
-matplotlib
-streamlit-aggrid
-numpy
-requests
-python-dateutil

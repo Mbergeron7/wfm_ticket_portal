@@ -35,7 +35,7 @@ if selected_id:
 
     # Editable fields
     st.markdown("### 🛠️ Work Ticket")
-    new_status = st.selectbox("Update Status", ["Open", "In Progress", "Resolved", "Escalated"], index=["Open", "In Progress", "Resolved", "Escalated"].index(ticket["status"]))
+    new_status = st.selectbox("Update Status", [" ", "Open", "In Progress", "Resolved", "Escalated"], index=["Open", "In Progress", "Resolved", "Escalated"].index(ticket["status"]))
     new_notes = st.text_area("Resolution Notes", value=ticket.get("resolution_notes", ""))
     new_assigned = st.text_input("Reassign To", value=ticket.get("assigned_to", ""))
 
@@ -57,7 +57,7 @@ st.subheader("Create New Ticket")
 
 with st.form("ticket_form"):
     advisor_name = st.text_input("Advisor Name *")
-    team_lead = st.selectbox("Advisor Team Lead *", ["Adeyinka", "Alana", "Alexandra", "Aman", "Bryan", "Cushana", "David", "Dee", "Jodi", "Julianne", "Kristin", "Lucas", "Maggie", "Mike", "Odette", "Pat", "Salomon", "Sean", "Shavindri", "Teresa"])
+    team_lead = st.selectbox("Advisor Team Lead *", [" ", "Adeyinka", "Alana", "Alexandra", "Aman", "Bryan", "Cushana", "David", "Dee", "Jodi", "Julianne", "Kristin", "Lucas", "Maggie", "Mike", "Odette", "Pat", "Salomon", "Sean", "Shavindri", "Teresa"])
     request_date = st.date_input("Date for Request *", value=datetime.date.today())
     request_type = st.selectbox("WFM Request *", ["Accommodation request/update", "Add additional hours", "Add/remove/change team meeting", "Add/remove/move training", "Add offline segment", "Advisor arrived late, remove absence", "CP skill update", "Employee status update (not for schedule changes)", "Is OT available?", "Move break/lunch because of meeting", "Schedule Update - CP3 use", "Schedule Error Adjustment", "Shift swap/offer", "Suggestions/Feedback", "Unpaid time off/vacation", "Testing"])
     detail_1 = st.text_area("Detail (Part 1)")
@@ -94,3 +94,4 @@ if submitted:
         df.to_csv(CSV_PATH, index=False)
 
     st.success(f"✅ Ticket submitted: {ticket['ticket_id']}")
+

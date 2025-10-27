@@ -1,0 +1,10 @@
+streamlit
+st-aggrid
+pandas
+numpy
+openpyxl
+extra-streamlit-components
+openai
+plotly
+matplotlib
+streamlit-aggrid

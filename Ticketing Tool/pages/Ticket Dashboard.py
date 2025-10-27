@@ -1,86 +1,45 @@
 import streamlit as st
 import pandas as pd
-import datetime
 import os
-from st_aggrid import AgGrid, GridOptionsBuilder
 
-CSV_PATH = "WFM_Tickets_backup.csv"
-
+st.set_page_config(page_title="📊 Ticket Dashboard", layout="wide")
 st.title("📊 WFM Ticket Dashboard")
 
-# 🔗 Link back to main ticket submission page
-st.markdown("[➕ Create New Ticket](wfm_ticket_portal)")
+# 🔄 Load ticket data
+TICKET_FILE = "tickets.csv"  # Update path if needed
 
-# 🚨 Check for data
-if not os.path.exists(CSV_PATH):
+if os.path.exists(TICKET_FILE):
+    df = pd.read_csv(TICKET_FILE)
+else:
     st.warning("No ticket data found.")
     st.stop()
 
-# 📥 Load and process data
-df = pd.read_csv(CSV_PATH)
-df["created_at"] = pd.to_datetime(df["created_at"], errors="coerce")
-df["last_updated"] = pd.to_datetime(df["last_updated"], errors="coerce")
-now = datetime.datetime.now(datetime.UTC)
-df["ticket_age_hours"] = (now - df["created_at"]).dt.total_seconds() / 3600
-df["sla_breach"] = (df["ticket_age_hours"] > 48) & (df["status"] != "Resolved")
+# 🧭 Sidebar filters
+st.sidebar.header("🔍 Filter Tickets")
+request_types = df["WFM Request"].dropna().unique()
+team_leads = df["Advisor Team Lead"].dropna().unique()
+status_options = df["Status"].dropna().unique()
 
-# 🧠 Risk scoring
-def risk_score(row):
-    score = 0
-    if row["priority"] == "Critical":
-        score += 40
-    elif row["priority"] == "High":
-        score += 30
-    elif row["priority"] == "Medium":
-        score += 20
-    score += min(row["ticket_age_hours"], 48) / 2
-    if row["status"] == "Escalated":
-        score += 20
-    return min(score, 100)
+selected_type = st.sidebar.multiselect("Request Type", request_types)
+selected_lead = st.sidebar.multiselect("Team Lead", team_leads)
+selected_status = st.sidebar.multiselect("Status", status_options)
 
-df["risk_score"] = df.apply(risk_score, axis=1)
+# 🧮 Apply filters
+filtered_df = df.copy()
+if selected_type:
+    filtered_df = filtered_df[filtered_df["WFM Request"].isin(selected_type)]
+if selected_lead:
+    filtered_df = filtered_df[filtered_df["Advisor Team Lead"].isin(selected_lead)]
+if selected_status:
+    filtered_df = filtered_df[filtered_df["Status"].isin(selected_status)]
 
-# 📈 Advisor performance
-st.subheader("📈 Advisor Performance")
-perf_df = df.copy()
-perf_df["resolution_time"] = (perf_df["last_updated"] - perf_df["created_at"]).dt.total_seconds() / 3600
-advisor_perf = perf_df.groupby("advisor_name").agg({
-    "ticket_id": "count",
-    "resolution_time": "mean",
-    "sla_breach": "sum",
-    "risk_score": "mean"
-}).reset_index()
-advisor_perf.columns = ["Advisor", "Ticket Count", "Avg Resolution (hrs)", "SLA Breaches", "Avg Risk Score"]
-st.dataframe(advisor_perf.sort_values("Avg Risk Score", ascending=False), use_container_width=True)
+# 📋 Display table
+st.markdown("### 🎟️ Filtered Tickets")
+st.dataframe(filtered_df, use_container_width=True)
 
-# 🔍 High-risk filter
-st.subheader("🧠 High-Risk Tickets")
-high_risk = df[df["risk_score"] > 70]
-if not high_risk.empty:
-    st.warning(f"{high_risk.shape[0]} high-risk ticket(s) detected.")
-    st.dataframe(high_risk[["ticket_id", "advisor_name", "priority", "status", "risk_score"]], use_container_width=True)
-
-# 📋 Drill-down table with clickable ticket links
-st.subheader("🔍 All Tickets")
-
-# Create clickable links using query params
-df["ticket_link"] = df["ticket_id"].apply(lambda tid: f"[{tid}](wfm_ticket_portal?ticket_id={tid})")
-display_df = df[["ticket_link", "advisor_name", "priority", "status", "risk_score", "sla_breach", "created_at", "last_updated"]]
-display_df.rename(columns={"ticket_link": "Ticket ID"}, inplace=True)
-
-gb = GridOptionsBuilder.from_dataframe(display_df)
-gb.configure_column("sla_breach", cellStyle={"color": "red"}, header_name="SLA Breach")
-gb.configure_column("risk_score", type=["numericColumn"], header_name="Risk Score")
-gb.configure_selection("single", use_checkbox=True)
-grid_options = gb.build()
-
-AgGrid(display_df, gridOptions=grid_options, height=400, theme="streamlit")
-
-# 📤 Export
-st.subheader("📤 Export")
-st.download_button(
-    label="Download All Tickets as CSV",
-    data=df.to_csv(index=False).encode("utf-8"),
-    file_name="wfm_tickets_full.csv",
-    mime="text/csv"
-)
+# 📊 Summary metrics
+st.markdown("### 📈 Ticket Summary")
+col1, col2, col3 = st.columns(3)
+col1.metric("Total Tickets", len(df))
+col2.metric("Open Tickets", (df["Status"] == "Open").sum())
+col3.metric("Resolved Tickets", (df["Status"] == "Resolved").sum())

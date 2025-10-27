@@ -17,13 +17,14 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
+          python-version: "3.10"
 
       - name: Install dependencies
+        working-directory: "Ticketing Tool"
         run: |
           python -m pip install --upgrade pip
-          pip install -r "Ticketing Tool/requirements.txt"
+          pip install -r requirements.txt
 
       - name: Run Streamlit app (optional)
         run: |
-          streamlit run app.py --server.headless true
+          streamlit run Ticketing\ Tool/wfm_ticket_portal.py --server.headless true

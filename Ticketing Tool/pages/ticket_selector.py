@@ -2,12 +2,18 @@ import streamlit as st
 import pandas as pd
 import os
 
-# Load ticket data from synced SharePoint file
+# Local path to synced SharePoint CSV
+TICKET_PATH = r"C:\Users\mikeb\OneDrive - StorageVault Canada Inc\3.  Workforce Management\Mike Files\Power BI Files\Power Automate Schedule Files\Ticketing Tool\incoming_tickets.csv"
+
+# Load ticket data
 @st.cache_data
 def load_tickets():
-    file_path = os.path.expanduser("~/OneDrive - StorageVault Canada Inc/BusinessIntelligence/incoming_tickets.csv")
-    df = pd.read_csv(file_path)
-    return df
+    if os.path.exists(TICKET_PATH):
+        df = pd.read_csv(TICKET_PATH)
+        return df
+    else:
+        st.error("❌ Ticket file not found at expected path.")
+        return pd.DataFrame()
 
 tickets = load_tickets()
 
@@ -54,7 +60,7 @@ st.markdown("---")
 col1, col2 = st.columns(2)
 with col1:
     if st.button("✅ Assign Ticket"):
-        st.success("Ticket assigned!")
+        st.success("Ticket assigned!")  # You can add logic to update the CSV here
 with col2:
     if st.button("🚨 Escalate Ticket"):
-        st.warning("Ticket escalated!")
+        st.warning("Ticket escalated!")  # Same here for escalation logic

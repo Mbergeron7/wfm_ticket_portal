@@ -5,7 +5,9 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 # --- Google Sheets Setup ---
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
+creds = ServiceAccountCredentials.from_json_keyfile_name("ServiceAccountCredentials.from_json_keyfile_name(
+    r"C:\Users\mikeb\OneDrive - StorageVault Canada Inc\3.  Workforce Management\Mike Files\Power BI Files\Power Automate Schedule Files\Ticketing tool\credentials.json",
+    scope", scope)
 client = gspread.authorize(creds)
 worksheet = client.open_by_key("1gzJ30wmAAcwEJ8H_nte7ZgH6suYZjGX_w86BhPIRndU").worksheet("Sheet1")  # Update tab name if needed
 
@@ -73,3 +75,4 @@ with col1:
 with col2:
     if st.button("🚨 Escalate Ticket"):
         st.warning("Ticket escalated!")  # Add escalation logic if needed
+

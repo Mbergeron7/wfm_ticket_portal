@@ -1,0 +1,3 @@
+Ticket ID,Advisor Name,Team Lead,Request Type,Request Date,Priority,Status,Assigned To,Detail 1,Detail 2,Resolution Notes,Created Timestamp
+TKT-20251028120540,Mike Test,Mike,Schedule Update,2025-10-28,Low,Open,Mike Bergeron,Test 1,Test 2,Test 3,2025-10-28T12:05:40.278636
+TKT-20251028123259,Mike Test,Mike,Training Request,2025-10-28,Low,Open,Mike Bergeron,Test 1,Test 2,Test 3,2025-10-28T12:32:59.550747

@@ -24,7 +24,7 @@ team_options = tickets["Team"].dropna().unique()
 priority_options = tickets["Priority"].dropna().unique()
 
 selected_status = st.sidebar.multiselect("Status", options=status_options)
-selected_team = st.sidebar.multiselect("Team", options=team_options)
+selected_team = st.sidebar.multiselect("Team Lead", options=team_options)
 selected_priority = st.sidebar.multiselect("Priority", options=priority_options)
 
 # Apply filters
@@ -64,6 +64,7 @@ with col1:
 with col2:
     if st.button("🚨 Escalate Ticket"):
         st.warning("Ticket escalated!")  # Same here for escalation logic
+
 
 
 

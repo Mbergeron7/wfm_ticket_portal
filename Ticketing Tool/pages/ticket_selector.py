@@ -20,7 +20,7 @@ tickets = load_tickets()
 # Sidebar filters
 st.sidebar.header("🔍 Filter Tickets")
 status_options = tickets["Status"].dropna().unique()
-team_options = tickets["Team"].dropna().unique()
+team_options = tickets["Team Lead"].dropna().unique()
 priority_options = tickets["Priority"].dropna().unique()
 
 selected_status = st.sidebar.multiselect("Status", options=status_options)
@@ -32,7 +32,7 @@ filtered = tickets.copy()
 if selected_status:
     filtered = filtered[filtered["Status"].isin(selected_status)]
 if selected_team:
-    filtered = filtered[filtered["Team"].isin(selected_team)]
+    filtered = filtered[filtered["Team Lead"].isin(selected_team)]
 if selected_priority:
     filtered = filtered[filtered["Priority"].isin(selected_priority)]
 
@@ -49,7 +49,7 @@ ticket_details = filtered[filtered["Ticket ID"] == selected_ticket].iloc[0]
 with st.expander("📄 Ticket Details"):
     st.markdown(f"**Subject:** {ticket_details['Subject']}")
     st.markdown(f"**Created:** {ticket_details['Created Date']}")
-    st.markdown(f"**Team:** {ticket_details['Team']}")
+    st.markdown(f"**Team Lead:** {ticket_details['Team']}")
     st.markdown(f"**Priority:** {ticket_details['Priority']}")
     st.markdown(f"**Status:** {ticket_details['Status']}")
     st.markdown(f"**SLA Risk:** {ticket_details['SLA Risk']}")
@@ -64,6 +64,7 @@ with col1:
 with col2:
     if st.button("🚨 Escalate Ticket"):
         st.warning("Ticket escalated!")  # Same here for escalation logic
+
 
 
 

@@ -77,4 +77,5 @@ if request_type and request_type != "Select...":
 
 # 🧭 Link to full request list
 st.markdown("---")
+
 st.markdown("[📋 View All Request Types](Request_Categories)")

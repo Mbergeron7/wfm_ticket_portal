@@ -62,4 +62,3 @@ if st.button("📨 Submit Ticket"):
 # --- Footer ---
 st.markdown("---")
 st.caption("This ticket will be synced to SharePoint via OneDrive. Ensure the file is not open in Excel during submission.")
-

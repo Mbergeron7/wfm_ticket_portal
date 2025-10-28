@@ -78,6 +78,3 @@ else:
     with col2:
         if st.button("🚨 Escalate Ticket"):
             st.warning("Ticket escalated!")  # Add escalation logic if needed
-
-
-

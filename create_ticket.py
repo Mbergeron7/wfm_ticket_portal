@@ -17,19 +17,34 @@ expected_columns = [
 if not os.path.exists(TICKET_PATH) or os.path.getsize(TICKET_PATH) == 0:
     df_init = pd.DataFrame(columns=expected_columns)
     df_init.to_csv(TICKET_PATH, index=False)
+else:
+    try:
+        df_existing = pd.read_csv(TICKET_PATH)
+        missing_cols = [col for col in expected_columns if col not in df_existing.columns]
+        if missing_cols:
+            for col in missing_cols:
+                df_existing[col] = ""
+            df_existing = df_existing[expected_columns]
+            df_existing.to_csv(TICKET_PATH, index=False)
+    except Exception as e:
+        st.error(f"❌ Failed to validate CSV schema: {e}")
 
 # --- Streamlit UI ---
 st.set_page_config(page_title="Create Ticket", page_icon="🎫")
 st.title("🎫 Submit a New Ticket")
 
 advisor_name = st.text_input("Advisor Name *")
-team_lead = st.selectbox("Team Lead *", ["Select...", "Adeyinka", "Alana", "Alexandra", "Aman", "Bryan", "Cushana", "David", "Dee", "Jodi", "Julianne",
-    "Kristin", "Lucas", "Maggie", "Mike", "Odette", "Pat", "Salomon", "Sean", "Shavindri", "Teresa"])
-request_type = st.selectbox("Request Type *", ["Select...", "Accommodation request/update", "Add additional hours", "Add/remove/change team meeting",
+team_lead = st.selectbox("Team Lead *", [
+    "Select...", "Adeyinka", "Alana", "Alexandra", "Aman", "Bryan", "Cushana", "David", "Dee", "Jodi", "Julianne",
+    "Kristin", "Lucas", "Maggie", "Mike", "Odette", "Pat", "Salomon", "Sean", "Shavindri", "Teresa"
+])
+request_type = st.selectbox("Request Type *", [
+    "Select...", "Accommodation request/update", "Add additional hours", "Add/remove/change team meeting",
     "Add/remove/move training", "Add offline segment", "Advisor arrived late, remove absence",
     "CP skill update", "Employee status update (not for schedule changes)", "Is OT available?",
     "Move break/lunch because of meeting", "Schedule Update - CP3 use", "Schedule Error Adjustment",
-    "Shift swap/offer", "Suggestions/Feedback", "Unpaid time off/vacation", "Testing"])
+    "Shift swap/offer", "Suggestions/Feedback", "Unpaid time off/vacation", "Testing"
+])
 request_date = st.date_input("Request Date", value=datetime.date.today())
 priority = st.selectbox("Priority", ["Low", "Medium", "High", "Critical"])
 status = st.selectbox("Status", ["Open", "In Progress", "Resolved"])
@@ -72,5 +87,6 @@ if st.button("📨 Submit Ticket"):
 # --- Footer ---
 st.markdown("---")
 st.caption("This ticket is saved to a shared OneDrive folder and synced to SharePoint. Ensure the file is not open in Excel during submission.")
+
 
 

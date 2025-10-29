@@ -87,7 +87,6 @@ python-decouple==3.8
 python-dotenv==1.1.1
 pytweening==1.2.0
 pytz==2025.2
-pywin32==310
 pyzmq==27.0.0
 referencing==0.37.0
 requests==2.32.4
@@ -115,4 +114,5 @@ urllib3==2.5.0
 watchdog==6.0.0
 wcwidth==0.2.13
 xlrd==2.0.2
+
 

@@ -1,3 +1,4 @@
+flask
 altair==5.5.0
 asttokens==3.0.0
 attrs==25.4.0
@@ -114,3 +115,4 @@ urllib3==2.5.0
 watchdog==6.0.0
 wcwidth==0.2.13
 xlrd==2.0.2
+
